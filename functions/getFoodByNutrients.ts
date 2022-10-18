@@ -29,6 +29,7 @@ export const handler: Handler = async (event, context) => {
       throw new Error('No data has been fetched')
     }
 
+    db.end()
     
     return {
       statusCode: 200,

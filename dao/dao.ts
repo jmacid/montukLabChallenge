@@ -70,4 +70,8 @@ export default class DB {
       throw new Error('An error ocurred while trying to fetch data from the nutrients table')
     }
   }
+
+  end(){
+    this.client?.end();
+  }
 }
