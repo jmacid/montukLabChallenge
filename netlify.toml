@@ -1,0 +1,10 @@
+[build]
+  functions = "functions"
+  command = "npm run build"
+
+[functions]
+  external_node_modules = ["pg-native"]
+
+[dev]
+  port = 8888
+  functionsPort = 3333
