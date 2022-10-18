@@ -71,6 +71,40 @@ export default class DB {
     }
   }
 
+  async getFoodInfo(fdcId: number): Promise<QueryResult<any> | undefined> {
+    try {
+
+      const query = `select
+        fn."foodNutrientId",
+        fn."foodId" as "fdcId",
+        fn."nutrientId",
+        fn."dataPoints",
+        fn."type",
+        fn."min",
+        fn."max",
+        fn."median",
+        fn."amount",
+        fn."foodNutrientDerivation",
+        n."name",
+        n."unit_name"
+      from foodnutrients fn
+      left join nutrients n
+      on fn."nutrientId" = n."nutrientId"
+      where fn."foodId" = ${fdcId}
+      order by n."rank"`
+
+      console.log(query)
+
+      const result = await this.client?.query(query)
+
+      return result
+
+    } catch (error) {
+      console.error(error)
+      throw new Error('An error ocurred while trying to fetch data from the db')
+    }
+  }
+
   end(){
     this.client?.end();
   }
