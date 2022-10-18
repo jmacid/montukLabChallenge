@@ -43,4 +43,31 @@ export default class DB {
       throw new Error('An error ocurred while trying to fetch data from the nutrients table')
     }
   }
+
+  async getFoodByNutrients(nutrientsList): Promise<QueryResult<any> | undefined> {
+    try {
+
+      let foodList = '';
+      nutrientsList.forEach( nutrient => {
+        foodList += `select f."foodId"  from foodnutrients f
+        where f."nutrientId" = ${nutrient.nutrientId}
+        group by f."foodId"
+        INTERSECT\n`
+      })
+
+      foodList = foodList.slice(0, -1*('INTERSECT\n'.length)) // get rid of the last INTERSECT
+
+      const query = 'select * from foods f2 left join ( ' + foodList + ') tb1 on tb1."foodId" = f2."fdcId"'
+
+      console.log(query)
+
+      const result = await this.client?.query(query)
+
+      return result
+
+    } catch (error) {
+      console.error(error)
+      throw new Error('An error ocurred while trying to fetch data from the nutrients table')
+    }
+  }
 }
