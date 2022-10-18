@@ -5,10 +5,13 @@ import { SelectBar } from "../../components/selectBar"
 import CircularProgress from '@mui/material/CircularProgress';
 import { NutrientBox } from "../../components/nutrientBox";
 import axios from 'axios';
+import { FoodCard } from "../../components/foodCard";
+
 
 export const HomePage: React.FC<{}> = () => {
   
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
+  const [foodInfo, setFoodInfo] = useState<Food[]>([]);
 
   const clickHandle = (nutrientId: string) => {
     const remainingNutrients = selectedNutrients.filter( item => item.nutrientId !== nutrientId);
@@ -16,9 +19,8 @@ export const HomePage: React.FC<{}> = () => {
   }
 
 
-  const getNutrientsList = async () => {
-    // 'https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList'
-    const res = await axios.get('http://localhost:8888/.netlify/functions/getNutrientsList', {
+  const getNutrientsList = async (): Promise<nutrientItem[]> => {
+    const res = await axios.get('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList', {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
@@ -28,17 +30,22 @@ export const HomePage: React.FC<{}> = () => {
     return res?.data as nutrientItem[];
   }
 
-  const fetchFood = async () => {
+  const fetchFood = async (): Promise<Food[]> => {
     const nutrients:any[] = [];
     selectedNutrients.map( sn => nutrients.push({nutrientId: sn.nutrientId, name:sn.name}));
 
-    // 'https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getFoodByNutrients'
-    const res = await axios.post('http://localhost:8888/.netlify/functions/getFoodByNutrients',
+    const res = await axios.post('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getFoodByNutrients',
     JSON.stringify({ "nutrients": nutrients}));
 
     console.log(res?.data)
 
+    setFoodInfo(res.data);
+
     return res?.data as Food[];
+  }
+
+  const learnMore = async (food: Food) => {
+    console.log(food);
   }
 
   console.log(selectedNutrients);
@@ -79,6 +86,26 @@ export const HomePage: React.FC<{}> = () => {
               Search
             </Button>
           </Stack>
+        )
+      }
+      {
+        foodInfo.length > 0 && (
+          <Stack width='80vw' margin='2em auto'>
+            <Grid container margin='2em 2em' alignItems="stretch">
+            {/* className="cardContainer" */}
+            {
+              foodInfo.map( food => (
+                <Grid item key={food.fdcId} margin='0.5em' style={{display: 'flex'}}>
+                  <FoodCard
+                  food = {food}
+                  onLearnMore={() => learnMore(food)}
+                  />
+                </Grid>
+                ))
+            }
+            </Grid>
+          </Stack>
+
         )
       }
       

@@ -24,3 +24,8 @@ type Food = {
   description: string
   publicationDate: string
 }
+
+type FoodCard = {
+  food: Food;
+  onLearnMore: Function;
+}

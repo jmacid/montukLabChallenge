@@ -40,6 +40,9 @@ const theme = createTheme({
     h1: {
       fontSize: '55px',
       color: themePallette.PRIMARY
+    },
+    h4: {
+      fontSize: '24px'
     }
   },
   components: {
