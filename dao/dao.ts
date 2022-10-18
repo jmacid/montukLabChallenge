@@ -85,7 +85,7 @@ export default class DB {
         fn."median",
         fn."amount",
         fn."foodNutrientDerivation",
-        n."name",
+        n."name" as "nutrientName",
         n."unit_name"
       from foodnutrients fn
       left join nutrients n

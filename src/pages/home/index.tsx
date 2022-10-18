@@ -11,7 +11,8 @@ import { FoodCard } from "../../components/foodCard";
 export const HomePage: React.FC<{}> = () => {
   
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
-  const [foodInfo, setFoodInfo] = useState<Food[]>([]);
+  const [foodByNutrients, setFoodByNutrients] = useState<Food[]>([]);
+  const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
 
   const clickHandle = (nutrientId: string) => {
     const remainingNutrients = selectedNutrients.filter( item => item.nutrientId !== nutrientId);
@@ -39,13 +40,18 @@ export const HomePage: React.FC<{}> = () => {
 
     console.log(res?.data)
 
-    setFoodInfo(res.data);
+    setFoodByNutrients(res.data);
 
     return res?.data as Food[];
   }
 
-  const learnMore = async (food: Food) => {
-    console.log(food);
+  const getFoodInfo = async (food: Food) => {
+    const res = await axios.post('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getFoodInfo',
+    JSON.stringify({ "fdcId": food.fdcId}));
+
+    console.log(res?.data);
+
+    setFoodInfo(res?.data);
   }
 
   console.log(selectedNutrients);
@@ -89,16 +95,16 @@ export const HomePage: React.FC<{}> = () => {
         )
       }
       {
-        foodInfo.length > 0 && (
+        foodByNutrients.length > 0 && (
           <Stack width='80vw' margin='2em auto'>
             <Grid container margin='2em 2em' alignItems="stretch">
             {/* className="cardContainer" */}
             {
-              foodInfo.map( food => (
+              foodByNutrients.map( food => (
                 <Grid item key={food.fdcId} margin='0.5em' style={{display: 'flex'}}>
                   <FoodCard
                   food = {food}
-                  onLearnMore={() => learnMore(food)}
+                  onLearnMore={() => getFoodInfo(food)}
                   />
                 </Grid>
                 ))

@@ -29,3 +29,18 @@ type FoodCard = {
   food: Food;
   onLearnMore: Function;
 }
+
+type FoodInfo = {
+  foodNutrientId: number;
+  fdcId: number;
+  nutrientId: number;
+  dataPoints: number;
+  type: string;
+  min: number;
+  max: number;
+  median: number;
+  amount: number;
+  foodNutrientDerivation: string;
+  nutrientName: string;
+  unit_name: string;
+}
