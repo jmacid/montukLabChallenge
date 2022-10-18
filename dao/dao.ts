@@ -57,7 +57,7 @@ export default class DB {
 
       foodList = foodList.slice(0, -1*('INTERSECT\n'.length)) // get rid of the last INTERSECT
 
-      const query = 'select * from foods f2 left join ( ' + foodList + ') tb1 on tb1."foodId" = f2."fdcId"'
+      const query = 'select * from foods f2 inner join ( ' + foodList + ') tb1 on tb1."foodId" = f2."fdcId"'
 
       console.log(query)
 
