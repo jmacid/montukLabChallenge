@@ -9,12 +9,7 @@ import axios from 'axios';
 export const HomePage: React.FC<{}> = () => {
 
   const getNutrientsList = async () => {
-    const res = await axios('http://localhost:8888/.netlify/functions/getNutrientsList', {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-    }
-    });
+    const res = await axios('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList');
 
     return res?.data;
   }
