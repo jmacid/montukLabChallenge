@@ -8,24 +8,19 @@ import {
   SelectChangeEvent
 } from "@mui/material";
 
-type SelectBarProps = {
-  title: string;
-  asyncFunc: Function;
-  loadingComponent: JSX.Element;
-}
-
-export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingComponent}) => {
-  const [age, setAge] = useState('');
+export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingComponent, setSelectedItems}) => {
+  const [selected, setSelected] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-  const [menuItems, setMenuItems] = useState<any[]>([]);
+  const [menuItems, setMenuItems] = useState<nutrientItem[]>([]);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const handleChange = async (event: SelectChangeEvent) => {
+    setSelected(event.target.value as string);
+    const value = await JSON.parse(event.target.value);
+    setSelectedItems( (selectedNutrients: nutrientItem[]) => [...selectedNutrients, value])
   };
 
   const asyncFuncHandler = async () => {
     const res = await asyncFunc();
-    console.log(res);
     
     setMenuItems(res);
     setLoading(false);
@@ -43,18 +38,18 @@ export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingCo
     : (
       <Box sx={{ minWidth: 120, margin: '2em 2em' }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{title}</InputLabel>
+          <InputLabel id="simple-select-label">{title}</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
+            labelId="simple-select-label"
+            id="simple-select"
+            value={selected}
             label={title}
             onChange={handleChange}
           >
           {
             menuItems.length > 0 && 
             menuItems.map( (item) => (
-              <MenuItem key={item.nutrientId} value={item.nutrientId}>{item.name}</MenuItem>
+              <MenuItem key={item.nutrientId} value={JSON.stringify({nutrientId: item.nutrientId, name: item.name})}>{item.name}</MenuItem>
           ))
           }
           </Select>

@@ -1,18 +1,30 @@
 import { Typography } from "@mui/material"
 import { Stack } from "@mui/system"
-import React from "react"
+import React, { useState } from "react"
 import { SelectBar } from "../../components/selectBar"
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 
 export const HomePage: React.FC<{}> = () => {
+  
+  const [selectedNutrients, setSelectedNutrients] = useState<any[]>([])
 
   const getNutrientsList = async () => {
-    const res = await axios('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList');
+    // 'https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList'
+    const res = await axios('http://localhost:8888/.netlify/functions/getNutrientsList', {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+    }
+    });
 
-    return res?.data;
+    return res?.data as nutrientItem[];
   }
+
+  console.log('selectedNutrients');
+  console.log(selectedNutrients);
+  console.log('selectedNutrients');
 
 
   return (
@@ -27,6 +39,7 @@ export const HomePage: React.FC<{}> = () => {
         title="Nutrients"
         asyncFunc={getNutrientsList}
         loadingComponent = {<CircularProgress />}
+        setSelectedItems = {setSelectedNutrients}
       />
 
       
