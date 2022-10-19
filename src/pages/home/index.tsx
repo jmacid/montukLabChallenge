@@ -82,8 +82,8 @@ export const HomePage: React.FC<{}> = () => {
       />
       {
         selectedNutrients.length > 0 && (
-          <Stack width='80vw' margin='2em auto'>
-            <Grid container margin='2em 2em' direction='row'>
+          <Stack width='80vw' margin='auto'>
+            <Grid container margin='2em auto' direction='row'>
               {
                 selectedNutrients.map( item => (
                   <Grid item key={item.nutrientId}>
@@ -106,7 +106,7 @@ export const HomePage: React.FC<{}> = () => {
       }
       {
         foodByNutrients.length > 0 && (
-          <Stack width='80vw' margin='2em auto'>
+          <Stack width='80vw'>
             <Grid container margin='2em 2em' alignItems="stretch">
             {/* className="cardContainer" */}
             {
