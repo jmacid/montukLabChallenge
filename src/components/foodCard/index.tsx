@@ -3,16 +3,18 @@ import React from "react";
 
 
 
-export const FoodCard: React.FC<FoodCard> = ({food, onLearnMore}) => {  
+export const FoodCard: React.FC<FoodCardProps> = ({food, onLearnMore}) => {
+
   return (
-    <Card sx={{maxWidth: '20em'}}>
+    <Card sx={{maxWidth: '20em', width:'100%'}}>
 
       <Stack height='100%' direction='column' justifyContent='space-between'>
       <CardContent>
         <Typography variant="h4" sx={{mb:1.5}}>{food.description}</Typography>
         <Divider />
-        <Typography sx={{mt:1.5}}>Category: {food.foodCategory}</Typography>
-        <Typography sx={{mt:1.5}}>Publication date: {food.publicationDate}</Typography>
+        <Typography sx={{mt:1.5}}><strong>ID: </strong>{food.fdcId}</Typography>
+        <Typography sx={{mt:1.5}}><strong>Category: </strong>{food.foodCategory}</Typography>
+        <Typography sx={{mt:1.5}}><strong>Publication date: </strong>{food.publicationDateFormatted}</Typography>
       </CardContent>
 
       <CardActions>

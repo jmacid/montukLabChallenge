@@ -7,6 +7,7 @@ import { NutrientBox } from "../../components/nutrientBox";
 import axios from 'axios';
 import { FoodCard } from "../../components/foodCard";
 import { FoodInfoModal } from '../../components/foodInfoModal'
+import './home.css'
 
 const env_dev = process.env.REACT_APP_ENV === 'development' ? true : false;
 
@@ -106,9 +107,8 @@ export const HomePage: React.FC<{}> = () => {
       }
       {
         foodByNutrients.length > 0 && (
-          <Stack width='80vw'>
-            <Grid container margin='2em 2em' alignItems="stretch">
-            {/* className="cardContainer" */}
+          <Stack width='80vw' margin='2em auto'>
+            <Grid container className="foodCardGrid" >
             {
               foodByNutrients.map( food => (
                 <Grid item key={food.fdcId} margin='0.5em' style={{display: 'flex'}}>

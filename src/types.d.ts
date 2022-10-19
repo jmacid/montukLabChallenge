@@ -27,15 +27,16 @@ type nutrientItem = {
 }
 
 type Food = {
-  fdcId: number
-  ndbNumber: number
-  foodCategory: string
-  dataType: string
-  description: string
-  publicationDate: string
+  fdcId: number;
+  ndbNumber: number;
+  foodCategory: string;
+  dataType: string;
+  description: string;
+  publicationDate: string;
+  publicationDateFormatted: string;
 }
 
-type FoodCard = {
+type FoodCardProps = {
   food: Food;
   onLearnMore: Function;
 }
