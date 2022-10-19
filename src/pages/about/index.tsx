@@ -27,7 +27,7 @@ export const AboutPage: React.FC<{}> = () => {
         mt='2em'
         textAlign='center'
       >
-        The repository is located on <a href='https://github.com/jmacid' target="_blank" rel="noreferrer"> <GitHubIcon /> GitHub</a>
+        The repository is located on <a href='https://github.com/jmacid/montukLabChallenge' target="_blank" rel="noreferrer"> <GitHubIcon /> GitHub</a>
       </Typography>
 
     </Stack>
