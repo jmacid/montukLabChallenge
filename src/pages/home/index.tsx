@@ -12,7 +12,7 @@ export const HomePage: React.FC<{}> = () => {
   
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
   const [foodByNutrients, setFoodByNutrients] = useState<Food[]>([]);
-  const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
+  // const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
 
   const clickHandle = (nutrientId: string) => {
     const remainingNutrients = selectedNutrients.filter( item => item.nutrientId !== nutrientId);
@@ -50,8 +50,8 @@ export const HomePage: React.FC<{}> = () => {
     JSON.stringify({ "fdcId": food.fdcId}));
 
     console.log(res?.data);
-
-    setFoodInfo(res?.data);
+    
+    // setFoodInfo(res?.data);
   }
 
   console.log(selectedNutrients);
