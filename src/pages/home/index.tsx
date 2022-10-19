@@ -62,6 +62,8 @@ export const HomePage: React.FC<{}> = () => {
     setFoodInfo(res?.data);
   }
 
+  console.log(foodInfo);
+
   return (
     <Stack direction="column" width='100%' mt='2em'>
       <Typography
