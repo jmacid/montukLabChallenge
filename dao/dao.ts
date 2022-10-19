@@ -91,7 +91,8 @@ export default class DB {
       left join nutrients n
       on fn."nutrientId" = n."nutrientId"
       where fn."foodId" = ${fdcId}
-      order by n."rank"`
+      order by n."rank"
+      limit 10`
 
       console.log(query)
 

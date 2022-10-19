@@ -6,18 +6,22 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { NutrientBox } from "../../components/nutrientBox";
 import axios from 'axios';
 import { FoodCard } from "../../components/foodCard";
+import { FoodInfoModal } from '../../components/foodInfoModal'
 
 const env_dev = process.env.REACT_APP_ENV === 'development' ? true : false;
 
 const appUrl = (!env_dev && typeof process.env.REACT_APP_URL === 'string') ? process.env.REACT_APP_URL : 'http://localhost:8888';
-
-
 
 export const HomePage: React.FC<{}> = () => {
   
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
   const [foodByNutrients, setFoodByNutrients] = useState<Food[]>([]);
   const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
+
+  // Modal states
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const clickHandle = (nutrientId: string) => {
     const remainingNutrients = selectedNutrients.filter( item => item.nutrientId !== nutrientId);
@@ -45,8 +49,6 @@ export const HomePage: React.FC<{}> = () => {
     const res = await axios.post(appUrl + endpoint,
     JSON.stringify({ "nutrients": nutrients}));
 
-    console.log(res?.data)
-
     setFoodByNutrients(res.data);
 
     return res?.data as Food[];
@@ -57,12 +59,12 @@ export const HomePage: React.FC<{}> = () => {
     const res = await axios.post(appUrl + endpoint,
     JSON.stringify({ "fdcId": food.fdcId}));
 
-    console.log(res?.data);
-    
-    setFoodInfo(res?.data);
-  }
+    if( !res || !res?.data )
+      return
 
-  console.log(foodInfo);
+    setFoodInfo(res?.data);
+    handleOpenModal();
+  }
 
   return (
     <Stack direction="column" width='100%' mt='2em'>
@@ -122,6 +124,11 @@ export const HomePage: React.FC<{}> = () => {
 
         )
       }
+      <FoodInfoModal
+        openModal = {openModal}
+        handleCloseModal = { handleCloseModal }
+        foodInfo = { foodInfo }
+      />
       
     </Stack>
 

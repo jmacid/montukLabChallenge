@@ -5,6 +5,16 @@ type SelectBarProps = {
   setSelectedItems: Function;
 }
 
+type FoodInfoModalProps = {
+  openModal: boolean;
+  handleCloseModal: () => void;
+  foodInfo: FoodInfo[];
+}
+
+type TableFoodInfoProps = {
+  foodInfo: FoodInfo[];
+}
+
 type NutrientBox = {
   nutrient: nutrientItem;
   onDelete: Function;
