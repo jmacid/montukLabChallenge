@@ -28,7 +28,7 @@ export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingCo
 
   useEffect( () => {
     asyncFuncHandler()
-  })
+  }, [])
 
   return (
     loading ?

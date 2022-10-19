@@ -7,12 +7,17 @@ import { NutrientBox } from "../../components/nutrientBox";
 import axios from 'axios';
 import { FoodCard } from "../../components/foodCard";
 
+const env_dev = process.env.REACT_APP_ENV === 'development' ? true : false;
+
+const appUrl = (!env_dev && typeof process.env.REACT_APP_URL === 'string') ? process.env.REACT_APP_URL : 'http://localhost:8888';
+
+
 
 export const HomePage: React.FC<{}> = () => {
   
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
   const [foodByNutrients, setFoodByNutrients] = useState<Food[]>([]);
-  // const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
+  const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
 
   const clickHandle = (nutrientId: string) => {
     const remainingNutrients = selectedNutrients.filter( item => item.nutrientId !== nutrientId);
@@ -21,7 +26,8 @@ export const HomePage: React.FC<{}> = () => {
 
 
   const getNutrientsList = async (): Promise<nutrientItem[]> => {
-    const res = await axios.get('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getNutrientsList', {
+    const endpoint = '/.netlify/functions/getNutrientsList'
+    const res = await axios.get(appUrl + endpoint, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
@@ -35,7 +41,8 @@ export const HomePage: React.FC<{}> = () => {
     const nutrients:any[] = [];
     selectedNutrients.map( sn => nutrients.push({nutrientId: sn.nutrientId, name:sn.name}));
 
-    const res = await axios.post('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getFoodByNutrients',
+    const endpoint = '/.netlify/functions/getFoodByNutrients';
+    const res = await axios.post(appUrl + endpoint,
     JSON.stringify({ "nutrients": nutrients}));
 
     console.log(res?.data)
@@ -46,15 +53,14 @@ export const HomePage: React.FC<{}> = () => {
   }
 
   const getFoodInfo = async (food: Food) => {
-    const res = await axios.post('https://timely-flan-5fe4e8.netlify.app/.netlify/functions/getFoodInfo',
+    const endpoint = '/.netlify/functions/getFoodInfo';
+    const res = await axios.post(appUrl + endpoint,
     JSON.stringify({ "fdcId": food.fdcId}));
 
     console.log(res?.data);
     
-    // setFoodInfo(res?.data);
+    setFoodInfo(res?.data);
   }
-
-  console.log(selectedNutrients);
 
   return (
     <Stack direction="column" width='100%' mt='2em'>
