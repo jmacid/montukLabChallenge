@@ -18,6 +18,7 @@ export const HomePage: React.FC<{}> = () => {
   const [selectedNutrients, setSelectedNutrients] = useState<any[]>([]);
   const [foodByNutrients, setFoodByNutrients] = useState<Food[]>([]);
   const [foodInfo, setFoodInfo] = useState<FoodInfo[]>([]);
+  const [searched, setSearched] = useState<boolean>(false);
 
   // Modal states
   const [openModal, setOpenModal] = React.useState<boolean>(false);
@@ -51,6 +52,8 @@ export const HomePage: React.FC<{}> = () => {
     JSON.stringify({ "nutrients": nutrients}));
 
     setFoodByNutrients(res.data);
+
+    setSearched(true)
 
     return res?.data as Food[];
   }
@@ -108,7 +111,7 @@ export const HomePage: React.FC<{}> = () => {
       {
         foodByNutrients.length > 0 && (
           <Stack width='80vw' margin='2em auto'>
-            <Grid container className="foodCardGrid" >
+            <Grid container display='grid' className="foodCardGrid" >
             {
               foodByNutrients.map( food => (
                 <Grid item key={food.fdcId} margin='0.5em' style={{display: 'flex'}}>
@@ -122,6 +125,11 @@ export const HomePage: React.FC<{}> = () => {
             </Grid>
           </Stack>
 
+        )
+      }
+      {
+        foodByNutrients.length === 0 && searched && (
+          <Typography variant="h6" margin='3em auto'>Not food found :(</Typography>
         )
       }
       <FoodInfoModal

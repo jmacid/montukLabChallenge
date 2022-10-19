@@ -1,10 +1,8 @@
-/* sx={{display:'grid', gap: '1em', gridAutoFlow:'row', gridTemplateColumns: 'repeat(3,1fr)'} */
-
 .foodCardGrid{
-  display: grid;
   gap: 1em;
   grid-auto-flow: row;
   grid-template-columns: repeat(3,1fr);
+  justify-content: center;
 }
 
 @media only screen and (max-width: 80em)  {

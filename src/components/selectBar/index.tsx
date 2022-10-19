@@ -20,8 +20,23 @@ export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingCo
   };
 
   const asyncFuncHandler = async () => {
+    function compareName(a: nutrientItem,b: nutrientItem) {
+      if ( a.name < b.name ){
+        return -1;
+      }
+      if ( a.name > b.name ){
+        return 1;
+      }
+      return 0;
+    }
+
     const res = await asyncFunc();
-    
+
+    if(!res)
+      return
+
+    res.sort( compareName )
+
     setMenuItems(res);
     setLoading(false);
   }

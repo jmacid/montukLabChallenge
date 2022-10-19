@@ -25,15 +25,11 @@ export const handler: Handler = async (event, context) => {
 
     const result = await db.getFoodByNutrients(nutrientsList)
 
-    if( result === undefined || result?.rowCount === 0) {
-      throw new Error('No data has been fetched')
-    }
-
     db.end()
     
     return {
       statusCode: 200,
-      body: JSON.stringify(result.rows),
+      body: JSON.stringify(result?.rows),
     }
   } catch (error) {
     console.error(error)
