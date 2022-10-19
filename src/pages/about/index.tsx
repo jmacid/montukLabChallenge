@@ -1,5 +1,6 @@
 import { Typography, Stack } from "@mui/material"
 import React from "react"
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export const AboutPage: React.FC<{}> = () => {
   return (
@@ -17,7 +18,16 @@ export const AboutPage: React.FC<{}> = () => {
         mt='2em'
         textAlign='center'
       >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga repellendus quidem nam. Ut, harum! Quos, totam cupiditate! Soluta expedita excepturi quis aut quisquam explicabo! Dolore cum ducimus sed accusantium ullam.
+          This page was made following the requirements of a challenge made by Montauk Labs.
+      </Typography>
+      <Typography
+        variant="body1"
+        margin='auto'
+        maxWidth='50%'
+        mt='2em'
+        textAlign='center'
+      >
+        The repository is located on <a href='https://github.com/jmacid' target="_blank" rel="noreferrer"> <GitHubIcon /> GitHub</a>
       </Typography>
 
     </Stack>
