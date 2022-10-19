@@ -28,6 +28,8 @@ export const SelectBar: React.FC<SelectBarProps> = ({title, asyncFunc, loadingCo
 
   useEffect( () => {
     asyncFuncHandler()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
